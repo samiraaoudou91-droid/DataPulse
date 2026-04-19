@@ -1,0 +1,62 @@
+services:
+  - type: pserv
+    name: datapulse-postgres
+    ipAllowList: []
+    plan: free
+    postgresVersion: 15
+
+  - type: web
+    name: datapulse-backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /api/health
+    healthCheckTimeout: 15
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: DB_HOST
+        fromDatabase:
+          name: datapulse-postgres
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: datapulse-postgres
+          property: port
+      - key: DB_USER
+        fromDatabase:
+          name: datapulse-postgres
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: datapulse-postgres
+          property: password
+      - key: DB_NAME
+        value: datapulse_db
+      - key: FRONTEND_URL
+        value: https://localhost:8080
+
+databases:
+  - name: datapulse-postgres
+    plan: free
+    ipAllowList: []
+    postgresMajorVersion: "15”
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
