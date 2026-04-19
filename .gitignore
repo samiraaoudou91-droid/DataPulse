@@ -9,6 +9,8 @@ backend/.DS_Store
 
 # Frontend Flutter
 frontend/.dart_tool/
+frontend/.idea/
+frontend/.*iml
 frontend/.flutter-plugins
 frontend/.flutter-plugins-dependencies
 frontend/.packages
@@ -32,6 +34,7 @@ frontend/linux/flutter/generated_plugins.cmake
 .DS_Store
 .env
 .env.local
+Thumbs.db
 
 # Logs
 *.log
