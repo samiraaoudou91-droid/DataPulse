@@ -7,7 +7,7 @@
 
 set -e  # Exit on error
 
-echo "🚀 DataPulse Setup Script"
+echo " DataPulse Setup Script"
 echo "========================"
 echo ""
 
@@ -18,41 +18,41 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Check prerequisites
-echo "📋 Vérification des prérequis..."
+echo " Vérification des prérequis..."
 echo ""
 
 # Node.js check
 if ! command -v node &> /dev/null; then
-    echo -e "${RED}❌ Node.js n'est pas installé${NC}"
+    echo -e "${RED} Node.js n'est pas installé${NC}"
     echo "   Télécharger de: https://nodejs.org/"
     exit 1
 else
-    echo -e "${GREEN}✅ Node.js $(node -v)${NC}"
+    echo -e "${GREEN} Node.js $(node -v)${NC}"
 fi
 
 # npm check
 if ! command -v npm &> /dev/null; then
-    echo -e "${RED}❌ npm n'est pas installé${NC}"
+    echo -e "${RED} npm n'est pas installé${NC}"
     exit 1
 else
-    echo -e "${GREEN}✅ npm $(npm -v)${NC}"
+    echo -e "${GREEN} npm $(npm -v)${NC}"
 fi
 
 # Flutter check
 if ! command -v flutter &> /dev/null; then
-    echo -e "${YELLOW}⚠️  Flutter n'est pas installé (optionnel pour web)${NC}"
+    echo -e "${YELLOW}  Flutter n'est pas installé (optionnel pour web)${NC}"
     echo "   Télécharger de: https://flutter.dev/docs/get-started/install"
 else
-    echo -e "${GREEN}✅ Flutter $(flutter --version | head -1)${NC}"
+    echo -e "${GREEN} Flutter $(flutter --version | head -1)${NC}"
 fi
 
 echo ""
-echo "📦 Installation des dépendances..."
+echo " Installation des dépendances..."
 echo ""
 
 # Backend setup
 if [ -d "backend" ]; then
-    echo "🔧 Backend setup..."
+    echo " Backend setup..."
     cd backend
 
     # Check if .env exists
@@ -62,30 +62,30 @@ if [ -d "backend" ]; then
     fi
 
     npm install
-    echo -e "${GREEN}✅ Backend dépendances installées${NC}"
+    echo -e "${GREEN} Backend dépendances installées${NC}"
     cd ..
 else
-    echo -e "${YELLOW}⚠️  Dossier backend non trouvé${NC}"
+    echo -e "${YELLOW}  Dossier backend non trouvé${NC}"
 fi
 
 echo ""
 
 # Frontend setup
 if [ -d "frontend" ]; then
-    echo "📱 Frontend setup..."
+    echo " Frontend setup..."
     cd frontend
     flutter pub get
-    echo -e "${GREEN}✅ Frontend dépendances installées${NC}"
+    echo -e "${GREEN} Frontend dépendances installées${NC}"
     cd ..
 else
-    echo -e "${YELLOW}⚠️  Dossier frontend non trouvé${NC}"
+    echo -e "${YELLOW}  Dossier frontend non trouvé${NC}"
 fi
 
 echo ""
-echo "✨ Setup complété!"
+echo " Setup complété!"
 echo ""
 echo "========================================"
-echo "📚 Prochaines étapes:"
+echo " Prochaines étapes:"
 echo "========================================"
 echo ""
 echo "1️⃣  Backend (développement):"
@@ -103,7 +103,7 @@ echo "   Installer PostgreSQL localement ou utiliser Docker:"
 echo "   docker run --name postgres -e POSTGRES_PASSWORD=pass -p 5432:5432 -d postgres"
 echo ""
 echo "========================================"
-echo -e "${GREEN}🎉 Prêt à développer!${NC}"
+echo -e "${GREEN} Prêt à développer!${NC}"
 echo "========================================”
 
 
