@@ -33,6 +33,7 @@ frontend/linux/flutter/generated_plugins.cmake
 *~
 .DS_Store
 .env
+.env.production
 .env.local
 Thumbs.db
 
