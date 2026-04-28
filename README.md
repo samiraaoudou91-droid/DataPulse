@@ -1,14 +1,14 @@
 #  DataPulse - Technology Insights Analytics Platform
 
-**Projet** : DataPulse - Plateforme de collecte et d'analyse d'insights technologiques 
-**Matière** : INF232 EC2 - Développement Backend  
-**Université** : Université de Yaoundé I  
-**Niveau** : Licence 2
-**Auteur** : Samira  Aoudou
-**Matricule** : 24G2715
-**Date** : 19 Avril 2026  
-**Statut** :  Complété et Déployé
-**Lien depot GitHub** : https://github.com/samiraaoudou91-droid/DataPulse 
+#### **Projet** : DataPulse - Plateforme de collecte et d'analyse d'insights technologiques 
+#### **Matière** : INF232 EC2 - Développement Backend 
+#### **Université** : Université de Yaoundé I 
+#### **Niveau** : Licence 2
+#### **Auteur** : Samira  Aoudou
+#### **Matricule** : 24G2715
+#### **Date** : 19 Avril 2026  
+#### **Statut** :  Complété et Déployé
+#### **Lien depot GitHub** : https://github.com/samiraaoudou91-droid/DataPulse 
 
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
