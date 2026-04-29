@@ -23,7 +23,7 @@ static const String baseUrl= 'https://datapulse-backend-kecz.onrender.com';
   }) async {
     try {
       final response = await http.post(
-        Uri.parse('$apiBaseUrl/insights'),
+        Uri.parse('$apiBaseUrl/api/insights'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'title': title,
@@ -51,7 +51,7 @@ static const String baseUrl= 'https://datapulse-backend-kecz.onrender.com';
     String sortBy = 'creation_date',
   }) async {
     try {
-      String url = '$apiBaseUrl/insights?sortBy=$sortBy';
+      String url = '$apiBaseUrl/api/insights?sortBy=$sortBy';
       if (category != null) url += '&category=$category';
       if (region != null) url += '&region=$region';
 
@@ -71,7 +71,7 @@ static const String baseUrl= 'https://datapulse-backend-kecz.onrender.com';
 
   static Future<Map<String, dynamic>> fetchInsightDetails(String id) async {
     try {
-      final response = await http.get(Uri.parse('$apiBaseUrl/insights/$id'))
+      final response = await http.get(Uri.parse('$apiBaseUrl/api/insights/$id'))
           .timeout(const Duration(seconds: 15));
 
       if (response.statusCode == 200) {
@@ -90,7 +90,7 @@ static const String baseUrl= 'https://datapulse-backend-kecz.onrender.com';
   static Future<Map<String, dynamic>> fetchAnalyticsSummary() async {
     try {
       final response = await http.get(
-        Uri.parse('$apiBaseUrl/analytics/summary'),
+        Uri.parse('$apiBaseUrl/api/analytics/summary'),
       ).timeout(const Duration(seconds: 15));
 
       if (response.statusCode == 200) {
@@ -106,7 +106,7 @@ static const String baseUrl= 'https://datapulse-backend-kecz.onrender.com';
   static Future<List<dynamic>> fetchTimeline() async {
     try {
       final response = await http.get(
-        Uri.parse('$apiBaseUrl/analytics/timeline'),
+        Uri.parse('$apiBaseUrl/api/analytics/timeline'),
       ).timeout(const Duration(seconds: 15));
 
       if (response.statusCode == 200) {
@@ -124,7 +124,7 @@ static const String baseUrl= 'https://datapulse-backend-kecz.onrender.com';
 
   static Future<bool> checkHealth() async {
     try {
-      final response = await http.get(Uri.parse('$apiBaseUrl/health'))
+      final response = await http.get(Uri.parse('$apiBaseUrl/api/health'))
           .timeout(const Duration(seconds: 10));
       return response.statusCode == 200;
     } catch (e) {
