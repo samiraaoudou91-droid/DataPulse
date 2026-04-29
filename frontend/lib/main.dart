@@ -42,7 +42,7 @@ class DataPulseApp extends StatelessWidget {
       textTheme: GoogleFonts.spaceMonoTextTheme(
         ThemeData(brightness: Brightness.dark).textTheme,
       ),
-      scaffoldBackgroundColor: const Color(0xFF0F1419),
+      scaffoldBackgroundColor: const Color.fromARGB(255, 28, 37, 46),
     );
   }
 }
