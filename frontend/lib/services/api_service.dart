@@ -3,10 +3,10 @@ import 'dart:convert';
 
 class ApiService {
   // À changer avec l'URL de déploiement réelle
-  static const String baseUrl = 'https://datapulse-backend-kecz.onrender.com';
+  static const String baseUrl = 'https://datapulse-frontend-gjf8.onrender.com/api';
 
   // Pour production: utiliser l'URL du serveur déployé
-  static const String productionUrl = 'https://datapulse-backend-kecz.onrender.com';
+  static const String productionUrl = 'https://datapulse-backend-kecz.onrender.com/api';
 
   static String get apiBaseUrl {
     // À changer en productionUrl lors du déploiement
