@@ -97,7 +97,7 @@ DataPulse/
 
 ---
 
-## 🚀 Démarrage Rapide
+##  Démarrage Rapide
 
 ### **Développement Local**
 
@@ -128,7 +128,7 @@ j'ai opté pour le serveur render pour les raisons suivantes:
 **En résumé** :
 1. Configurer PostgreSQL sur Render
 2. Déployer le backend sur Render
-3. Générer l'APK Flutter
+3. Déployer le frontend sur render
 
 
 ---
