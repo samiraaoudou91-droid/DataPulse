@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ApiService {
-
+static const String baseUrl= 'https://datapulse-backend-kecz.onrender.com/api';
   // Pour production: utiliser l'URL du serveur déployé
   static const String productionUrl = 'https://datapulse-backend-kecz.onrender.com/api';
 
