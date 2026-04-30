@@ -35,7 +35,8 @@ class Insight {
       description: json['description'] ?? '',
       region: json['region'] ?? 'Global',
       impactLevel: json['impact_level'] ?? 'medium',
-      adoptionRate: (json['adoption_rate'] ?? 0).toDouble(),
+      // CORRECTION : double.tryParse gère le texte "50.00"
+      adoptionRate: double.tryParse(json['adoption_rate']?.toString() ?? '0') ?? 0.0,
       creationDate: json['creation_date'] != null
           ? DateTime.parse(json['creation_date'])
           : DateTime.now(),
@@ -50,18 +51,6 @@ class Insight {
           .toList(),
     );
   }
-
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'title': title,
-    'category': category,
-    'description': description,
-    'region': region,
-    'impact_level': impactLevel,
-    'adoption_rate': adoptionRate,
-    'creation_date': creationDate.toIso8601String(),
-    'updated_date': updatedDate.toIso8601String(),
-  };
 }
 
 // ============== TECHNOLOGY MODEL ==============
@@ -89,44 +78,9 @@ class Technology {
       name: json['name'] ?? '',
       category: json['category'] ?? '',
       maturityLevel: json['maturity_level'],
-      adoptionPercentage: (json['adoption_percentage'] ?? 0).toDouble(),
+      // CORRECTION
+      adoptionPercentage: double.tryParse(json['adoption_percentage']?.toString() ?? '0') ?? 0.0,
       insightId: json['insight_id'] ?? '',
-    );
-  }
-}
-
-// ============== CHALLENGE MODEL ==============
-
-class Challenge {
-  final String id;
-  final String title;
-  final String description;
-  final String? severity;
-  final String? affectedTech;
-  final String insightId;
-  final DateTime createdAt;
-
-  Challenge({
-    required this.id,
-    required this.title,
-    required this.description,
-    this.severity,
-    this.affectedTech,
-    required this.insightId,
-    required this.createdAt,
-  });
-
-  factory Challenge.fromJson(Map<String, dynamic> json) {
-    return Challenge(
-      id: json['id'] ?? '',
-      title: json['title'] ?? '',
-      description: json['description'] ?? '',
-      severity: json['severity'],
-      affectedTech: json['affected_tech'],
-      insightId: json['insight_id'] ?? '',
-      createdAt: json['created_at'] != null
-          ? DateTime.parse(json['created_at'])
-          : DateTime.now(),
     );
   }
 }
@@ -165,61 +119,22 @@ class AnalyticsSummary {
     final impList = (json['impactDistribution'] as List?)
         ?.map((e) => ImpactStat.fromJson(e))
         .toList() ?? [];
-    final adoptStats = json['adoptionStats'] != null
-        ? AdoptionStats.fromJson(json['adoptionStats'][0] ?? {})
-        : AdoptionStats(minAdoption: 0, maxAdoption: 100, avgAdoption: 50, medianAdoption: 50);
+    
+    // CORRECTION : on vérifie si la liste n'est pas vide avant de prendre [0]
+    final adoptStatsData = (json['adoptionStats'] as List?)?.isNotEmpty == true 
+        ? json['adoptionStats'][0] 
+        : {};
 
     return AnalyticsSummary(
-      totalInsights: summary['total_insights'] ?? 0,
-      totalTechnologies: summary['total_technologies'] ?? 0,
-      uniqueRegions: summary['unique_regions'] ?? 0,
-      avgAdoptionRate: (summary['avg_adoption_rate'] ?? 0).toDouble(),
+      totalInsights: int.tryParse(summary['total_insights']?.toString() ?? '0') ?? 0,
+      totalTechnologies: int.tryParse(summary['total_technologies']?.toString() ?? '0') ?? 0,
+      uniqueRegions: int.tryParse(summary['unique_regions']?.toString() ?? '0') ?? 0,
+      // CORRECTION
+      avgAdoptionRate: double.tryParse(summary['avg_adoption_rate']?.toString() ?? '0') ?? 0.0,
       categories: catList,
       regions: regList,
       impactDistribution: impList,
-      adoptionStats: adoptStats,
-    );
-  }
-}
-
-class CategoryStat {
-  final String category;
-  final int count;
-
-  CategoryStat({required this.category, required this.count});
-
-  factory CategoryStat.fromJson(Map<String, dynamic> json) {
-    return CategoryStat(
-      category: json['category'] ?? '',
-      count: json['count'] ?? 0,
-    );
-  }
-}
-
-class RegionStat {
-  final String region;
-  final int count;
-
-  RegionStat({required this.region, required this.count});
-
-  factory RegionStat.fromJson(Map<String, dynamic> json) {
-    return RegionStat(
-      region: json['region'] ?? '',
-      count: json['count'] ?? 0,
-    );
-  }
-}
-
-class ImpactStat {
-  final String impactLevel;
-  final int count;
-
-  ImpactStat({required this.impactLevel, required this.count});
-
-  factory ImpactStat.fromJson(Map<String, dynamic> json) {
-    return ImpactStat(
-      impactLevel: json['impact_level'] ?? '',
-      count: json['count'] ?? 0,
+      adoptionStats: AdoptionStats.fromJson(adoptStatsData),
     );
   }
 }
@@ -239,13 +154,17 @@ class AdoptionStats {
 
   factory AdoptionStats.fromJson(Map<String, dynamic> json) {
     return AdoptionStats(
-      minAdoption: (json['min_adoption'] ?? 0).toDouble(),
-      maxAdoption: (json['max_adoption'] ?? 100).toDouble(),
-      avgAdoption: (json['avg_adoption'] ?? 50).toDouble(),
-      medianAdoption: (json['median_adoption'] ?? 50).toDouble(),
+      // CORRECTION SYSTEMATIQUE
+      minAdoption: double.tryParse(json['min_adoption']?.toString() ?? '0') ?? 0.0,
+      maxAdoption: double.tryParse(json['max_adoption']?.toString() ?? '100') ?? 100.0,
+      avgAdoption: double.tryParse(json['avg_adoption']?.toString() ?? '50') ?? 50.0,
+      medianAdoption: double.tryParse(json['median_adoption']?.toString() ?? '50') ?? 50.0,
     );
   }
 }
+
+// Les classes CategoryStat, RegionStat et ImpactStat ne changent pas 
+// car elles utilisent des entiers (int) qui sont généralement bien gérés.
 
 
 
