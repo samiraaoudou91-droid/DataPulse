@@ -200,28 +200,36 @@ class AnalyticsSummary {
     required this.adoptionStats,
   });
 
+
   factory AnalyticsSummary.fromJson(Map<String, dynamic> json) {
-    final summary = json['summary'] ?? {};
-    
+    // 1. Extraire le résumé de manière sécurisée
+    final summary = json['summary'] is Map ? json['summary'] : {};
+
+    // 2. Extraire les listes en forçant le type List
+    // On utilise List.from pour éviter l'erreur "not a subtype of List"
+    final List<dynamic> catRaw = json['categories'] is List ? List.from(json['categories']) : [];
+    final List<dynamic> regRaw = json['regions'] is List ? List.from(json['regions']) : [];
+    final List<dynamic> impRaw = json['impactDistribution'] is List ? List.from(json['impactDistribution']) : [];
+    final List<dynamic> adoptRaw = json['adoptionStats'] is List ? List.from(json['adoptionStats']) : [];
+
     return AnalyticsSummary(
       totalInsights: int.tryParse(summary['total_insights']?.toString() ?? '0') ?? 0,
       totalTechnologies: int.tryParse(summary['total_technologies']?.toString() ?? '0') ?? 0,
       uniqueRegions: int.tryParse(summary['unique_regions']?.toString() ?? '0') ?? 0,
       avgAdoptionRate: double.tryParse(summary['avg_adoption_rate']?.toString() ?? '0') ?? 0.0,
-      categories: (json['categories'] as List? ?? [])
-          .map((e) => CategoryStat.fromJson(e))
-          .toList(),
-      regions: (json['regions'] as List? ?? [])
-          .map((e) => RegionStat.fromJson(e))
-          .toList(),
-      impactDistribution: (json['impactDistribution'] as List? ?? [])
-          .map((e) => ImpactStat.fromJson(e))
-          .toList(),
+      
+      // On mappe après avoir sécurisé la liste
+      categories: catRaw.map((e) => CategoryStat.fromJson(e as Map<String, dynamic>)).toList(),
+      regions: regRaw.map((e) => RegionStat.fromJson(e as Map<String, dynamic>)).toList(),
+      impactDistribution: impRaw.map((e) => ImpactStat.fromJson(e as Map<String, dynamic>)).toList(),
+      
       adoptionStats: AdoptionStats.fromJson(
-        (json['adoptionStats'] as List? ?? []).isNotEmpty 
-            ? json['adoptionStats'][0] 
-            : {}
+        adoptRaw.isNotEmpty ? (adoptRaw[0] as Map<String, dynamic>) : {}
       ),
     );
   }
-}
+
+
+  
+
+ 
