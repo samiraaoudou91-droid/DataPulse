@@ -102,13 +102,9 @@ static Future<Map<String, dynamic>> fetchInsightDetails(String id) async {
 }
 
   
-  
 
 
-
-
-
-  // =============== ANALYTICS ===============
+ // =============== ANALYTICS ===============
 
   static Future<Map<String, dynamic>> fetchAnalyticsSummary() async {
     try {
@@ -117,7 +113,13 @@ static Future<Map<String, dynamic>> fetchInsightDetails(String id) async {
       ).timeout(const Duration(seconds: 15));
 
       if (response.statusCode == 200) {
-        return jsonDecode(response.body);
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        
+        // CORRECTION : On s'assure que les chiffres du résumé sont bien des nombres
+        if (data['average_adoption'] != null) {
+          data['average_adoption'] = double.tryParse(data['average_adoption'].toString()) ?? 0.0;
+        }
+        return data;
       } else {
         throw Exception('Erreur analytics: ${response.statusCode}');
       }
@@ -133,15 +135,23 @@ static Future<Map<String, dynamic>> fetchInsightDetails(String id) async {
       ).timeout(const Duration(seconds: 15));
 
       if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        return data['data'] ?? [];
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        final List<dynamic> timeline = responseData['data'] ?? [];
+
+        // CORRECTION : Conversion pour chaque point du graphique (Timeline)
+        return timeline.map((point) {
+          if (point['avg_adoption'] != null) {
+            point['avg_adoption'] = double.tryParse(point['avg_adoption'].toString()) ?? 0.0;
+          }
+          return point;
+        }).toList();
       } else {
         throw Exception('Erreur timeline: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception('Erreur réseau: $e');
     }
-  }
+  } 
 
   // =============== HEALTH ===============
 
